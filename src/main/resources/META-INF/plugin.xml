@@ -9,7 +9,17 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.urrestarazualejandro.agentsskillsfinder.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.urrestarazualejandro.agentsskillsfinder.startup.MyProjectActivity" />
+        <toolWindow
+            factoryClass="com.github.urrestarazualejandro.agentsskillsfinder.toolWindow.MyToolWindowFactory"
+            id="Agent Skills"
+            anchor="right"/>
+        <projectService
+            serviceImplementation="com.github.urrestarazualejandro.agentsskillsfinder.services.SkillsService"/>
     </extensions>
+
+    <projectListeners>
+        <listener
+            class="com.github.urrestarazualejandro.agentsskillsfinder.listeners.ProjectOpenListener"
+            topic="com.intellij.openapi.project.ProjectManagerListener"/>
+    </projectListeners>
 </idea-plugin>
