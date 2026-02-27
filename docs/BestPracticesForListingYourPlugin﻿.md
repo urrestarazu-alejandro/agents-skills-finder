@@ -1,0 +1,305 @@
+The core elements of a plugin’s Overview page are extracted from the Plugin Configuration File — plugin.xml and cannot
+be changed without uploading a new plugin version. These extracted elements include the plugin’s name, a link to the
+plugin website (if there is one), the plugin’s description, and change notes.
+
+Plugin name﻿
+The plugin’s name is added in the plugin.xml file, under the name tag. Use a short, relevant, memorable name that’s 1- 4
+words long (max 20 characters). There is a limitation of max 60 characters, however we strongly recommend using a
+shorter name.
+
+✅ Do:
+
+❌ Don't:
+
+Write the name using Latin characters and symbols, including numbers and special symbols (e.g., period, hyphen,
+parentheses).
+
+Exception: language packs.
+
+Write the name in title case.
+
+Use an original name. (Check whether the name you want is already in use on JetBrains Marketplace).
+
+Use clear, concise wording that reflects the plugin’s core purpose.
+
+Prefer descriptive names over marketing-style terms or technical jargon.
+
+Keep names short and memorable (1–4 words).
+
+Example:
+
+✅ "Plain Text"
+
+❌ "Free Plain Text Support Plus Platinum Maximum Edition”
+
+✅ "Docker"
+
+❌ "Docker Plugin Support for IntelliJ IDEA”
+
+Use the word “Plugin” in the name.
+
+Use Emoji or symbols in the name.
+
+Use the generic terms like "Support", "Tool" and "Integration" as they are usually implied by the context.
+
+Include “JetBrains” or supported JetBrains products in the name. (Compatible products are displayed separately on the
+plugin page).
+
+Example:
+
+❌ "XYZ CLion Plugin”
+
+❌ "IntelliJer"
+
+❌ "Markdown Editor Support"
+
+Infringe on any third-party trademarks.
+
+Use punctuation marks when not explicitly needed or as a separator instead of spaces. (Some punctuation marks are
+permitted but discouraged).
+
+Example:
+
+❌ “XYZ.Language.Plugin”
+
+Include functionality descriptions, version info, or other notes.
+
+Example:
+
+❌ “XYZ - Free Version”
+
+Product compatibility﻿
+The list of compatible products is displayed under the “Buy” or “Get” button (depending on whether you are publishing a
+free plugin or a paid one).
+
+Compatibility Overview Page
+The product compatibility is determined by the plugin.xml file. You can also manually reconfigure the list of compatible
+products in the admin panel under the General Information section.
+
+Compatibility Admin Page
+Plugin description﻿
+The plugin description should be added to the plugin.xml file under the `description` tag. It can contain most HTML
+tags, and it is displayed in the Plugin Manager inside JetBrains IDEs and on the plugin listing page on JetBrains
+Marketplace.
+
+Make sure your description is concise and offers a clear value proposition. It should be easy to understand at a glance
+what the product offers.
+
+Description Example
+✅ DO:
+
+❌ DON’T:
+
+Use English as the primary language (the English description should come first if you decide to include localized
+descriptions).
+
+Use correct spelling and grammar.
+
+Use direct wording and avoid the use of marketing adjectives like "simple", "lightweight", or "professional".
+
+Reference brands that you’re not affiliated with.
+
+Make unverifiable claims.
+
+Include inappropriate content, such as the promotion of third-party services, profane or offensive language, etc.
+
+Use non-standard capitalization, unless it’s a part of a brand name.
+
+Tips and Tricks:
+
+The first 40 characters of the plugin description must be in English and contain a short summary. This will be used for
+the plugin’s preview card on JetBrains Marketplace. Note that you can’t amend the text of a plugin card separately. You
+can also embed the card on your website.
+
+Make sure that your description has been proofread and that it is formatted properly before you upload your plugin.
+
+Use the Media section to add images that illustrate your plugin’s functionality, rather than embedding them directly in
+the plugin description.
+
+If you include media in the description, ensure the images are optimized for both the JetBrains Marketplace website and
+the IDE. Remember that images in the description cannot be zoomed in, so clarity is crucial. While the recommended width
+is between 600 and 800 pixels, verify that your images are clear, relevant, and enhance the description without adding
+unnecessary complexity for users.
+
+Use bullet points to describe the plugin’s main benefits.
+
+Put some inline links to useful resources (issue tracker, forum, etc.) to the description. This way, the links will be
+available from the Plugin Manager inside IDEs.
+
+Draft the description with SEO keywords in mind, but please avoid keyword stuffing.
+
+Plugin logo﻿
+The plugin logo should be added directly to the plugin’s distribution file. You can find the detailed requirements and
+instructions on how to add the plugin logo here. The general recommendation is to use a simple, recognizable,
+eye-catching image. It is better to avoid including text, but If the logo contains it, the text should be readable.
+
+Note, that you can choose not to use a logo.
+
+❌ DON’T:
+
+Use the default logo of the IntelliJ Platform Plugin Template or IntelliJ SDK Code Samples.
+
+Create a logo that merely consists of text repeating your plugin name.
+
+Use a logo that resembles any of the JetBrains product logos or the logos of any other brands.
+
+Media﻿
+The media section is the first element that users will see on the plugin page, and it is one of the best ways to show
+your plugin in action. You can add screenshots and video under the Media section in the admin panel of the plugin page
+after uploading your plugin.
+
+Fields for Media
+Screenshots﻿
+We recommend adding screenshots that display plugin features. The minimum recommended size is 1200 × 760 pixels. You can
+use a .gif showing some action or add overlay text to clarify what a screenshot depicts. You can also add informational
+slides in addition to screenshots.
+
+Theme plugins must have screenshots that display the visual style they provide.
+
+✅ DO:
+
+❌ DON’T:
+
+Display the interface of the relevant JetBrains product.
+
+Use the default IDE theme in screenshots (Exception: theme plugins should represent the visual style they provide)
+
+Use high-quality images with legible texts.
+
+Include only relevant information.
+
+Upload screenshots with different aspect ratios.
+
+Add screenshots that misleadingly represent your plugin.
+
+Advertise third-party products or brands or include any other content unrelated to plugin functionality.
+
+Include any personal information.
+
+Include desktop backgrounds and browser windows in your screenshots.
+
+Video﻿
+If you've got a product video on YouTube, you can add the URL to it. We recommend using a short promo or demo video
+that’s less than 5 minutes long. A video can help you improve user interaction with your listing.
+
+Tags﻿
+Plugin tags are displayed above the plugin name on the plugin page and are used as search filters. You should select at
+least one plugin tag while uploading the plugin (in the Plugin Upload form). You can also change tags later under the
+General Information section on the admin panel.
+
+Fields for Tags
+Choose your tags wisely, as they will affect searchability. Don’t select categories that the plugin does not fit. If you
+feel that an appropriate tag is missing, please contact the JetBrains Marketplace team at marketplace@jetbrains.com, and
+we will consider adding it.
+
+License﻿
+The License field specifies the legal agreement between you, as the plugin owner, and those who wish to use your plugin.
+It outlines the terms and conditions for the usage and distribution of your plugin, and specifies the rights and
+responsibilities of both parties. Providing a license for your plugin is important because it legally protects your
+intellectual property rights and sets clear guidelines for how others can use and distribute your work.
+
+A license is mandatory to publish a Plugin on JetBrains Marketplace. Please refer to the JetBrains Marketplace Developer
+Agreement (10. Licensing to Customers).
+
+The choice of license depends on various factors, such as the type of software you are distributing, the level of
+control you want to maintain over its use, and the level of collaboration you want to encourage among users. It's
+important to research and understand the different types of licenses available and consult with a legal professional if
+necessary to make an informed decision that meets your specific needs.
+
+We cannot recommend any specific licenses, though we can point you either to commonly used open-source licenses or EULA.
+
+Keep in mind that when you choose to license your plugin under an open-source license, it means that you are making your
+software freely available to the public, allowing others to access, modify, and distribute your code.
+
+The License field
+Providing a source code link is essential to uphold the principles of open source. While it's not always required by the
+license, it's best practice to include a source code link to ensure transparency and foster collaboration. We encourage
+developers to provide a source code link if they choose to license their Plugin under an open-source license.
+
+Getting started section﻿
+You can choose to add getting started instructions to your page on the admin panel. These instructions will be displayed
+on the plugin page, and you can use HTML tags to add formatting. Consider outlining the key steps for getting started,
+such as how to install and configure your plugin. These instructions should not include just a link to an external help
+doc. Additional instructions can be added to the Documentation URL or to a Custom page.
+
+Fields for instructions
+Use concise, action-oriented headlines, and structure them clearly: (e.g. “1. Launch IDE 2. Go to File -> Settings ->
+Tools to configure the plugin…”).
+
+Change Notes﻿
+Change notes help you track the progress you’ve made on your plugin, introduce new features, announce changes, and recap
+bug fixes.
+
+To add change notes, write a short summary of the changes in a new plugin version inside the change-notes tag of the
+plugin.xml file. The latest change notes will be displayed in the What’s new section of a plugin page and in the Plugin
+Manager inside IDEs. If there are too many change notes, please consider adding them as a Custom page and providing a
+link to it or to an external page in the change notes.
+
+Contacts and resources﻿
+You can add links to your website, issue tracker, forum page, source code, documentation, and any other custom links to
+your plugin page. They will be displayed in the Additional Information section.
+
+Please make sure that all the external links on your plugin page are reachable from the internet. If you add a source
+code repository link, please make sure that it is publicly available.
+
+Additional Information
+In order to display your vendor site and email address on the Plugin page, you should fill in the optional url and email
+attributes in the plugin.xml file:
+
+<vendor url="https://www.company.com" email="support@company.com">Company Inc.</vendor>
+Note that if you have a plugin transferred to an Organization, the Vendor link will lead to an organization page. Links
+to the bug tracker, forum, and source code can be added in an admin panel under the Technical Information section. The
+license link should be added upon upload (in the Plugin Upload form) and can be edited in the General Information
+section.
+
+A vendor website can be added in the plugin.xml file:
+
+<idea-plugin url="https://www.company.com/plugin"></idea-plugin>
+Note that the Plugin homepage link in the plugin manager in IDEs links to your JetBrains Marketplace plugin page, not
+the website you specified under the idea-plugin tag.
+
+Plugin Homepage
+Donations﻿
+Adding or having a donation link is not mandatory for plugin authors.
+
+Donation links can be added for all of the types of plugins in JetBrains Marketplace: (i) Free, (ii) Paid, and (iii)
+Externally Paid.
+
+Donations do not replace license purchase for paid plugins.
+
+Donation links should not be included within the plugin description.
+
+JetBrains only provides a dedicated field to add a link for donations.
+
+JetBrains reserves the right, at any time and for any reason, to discontinue the field for donation links or to remove
+such links.
+
+The plugin author may choose various third-party payment processing services through which the donations may be
+submitted and processed, and so additional terms may apply to such payments based on the third-party payment processing
+provider; however, such services are in no way operated, endorsed, or supported by JetBrains.
+
+JetBrains doesn't take or receive any commission nor in any way process or participate in the transaction.
+
+Donations might fall under taxation laws in certain countries. It is advisable to consult a tax advisor to settle any
+potential financial and legal issues on the user´s side.
+
+All related disputes, including refund requests, chargebacks, and cancellations will be handled by the respective plugin
+author and/or the respective third-party payment processing provider.
+
+How to add a Donation link﻿
+It is possible to add donation links for free plugins listed on JetBrains Marketplace. We can also provide this
+functionality by request for paid and freemium plugins. Please contact us at marketplace@jetbrains.com to set it up.
+
+To add a donation link for a free plugin, go to the Monetization tab of the plugin admin panel and add a link and a
+title for the donation service you are using.
+
+Donation Links
+That’s it. Now, if a user gives a plugin a 4 or 5 star rating, they will see a prompt suggesting they donate to it, as
+well.
+
+Donation Links under review
+We are also working on making donation links prominent for users, both on JetBrains Marketplace and in the IDE Plugin
+Manager.
+
+Donations might fall under taxation laws in certain countries. It is advisable to consult a tax advisor to address any
+potential financial or legal issues on your side.
