@@ -130,6 +130,19 @@ kover {
             xml {
                 onCheck = true
             }
+            filters {
+                excludes {
+                    // Exclude UI components that are hard to unit test
+                    classes("*.MyToolWindowFactory", "*.SkillsToolWindowContent*")
+                    // Exclude background task scanner (requires full IntelliJ Platform setup)
+                    classes("*.SkillsFileScanner*")
+                }
+            }
+        }
+        verify {
+            rule {
+                minBound(90)
+            }
         }
     }
 }
