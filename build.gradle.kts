@@ -107,6 +107,12 @@ intellijPlatform {
         ides {
             recommended()
         }
+        // Verify plugin compatibility with specified IDE versions
+        // Read more: https://plugins.jetbrains.com/docs/intellij/verifying-plugin-compatibility.html
+        freeArgs = listOf(
+            "-mute",
+            "ForbiddenPluginIdPrefix" // Mute warning about plugin ID prefix
+        )
     }
 }
 
@@ -123,6 +129,19 @@ kover {
         total {
             xml {
                 onCheck = true
+            }
+            filters {
+                excludes {
+                    // Exclude UI components that are hard to unit test
+                    classes("*.MyToolWindowFactory", "*.SkillsToolWindowContent*")
+                    // Exclude background task scanner (requires full IntelliJ Platform setup)
+                    classes("*.SkillsFileScanner*")
+                }
+            }
+        }
+        verify {
+            rule {
+                minBound(90)
             }
         }
     }
