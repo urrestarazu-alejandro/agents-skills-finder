@@ -18,7 +18,13 @@ class SkillRowFilter : RowFilter<SkillsTableModel, Int>() {
 
         val skill = model.getSkillAt(rowIndex) ?: return false
 
-        return skill.description.lowercase().contains(searchText) ||
-                skill.name.lowercase().contains(searchText)
+        // Split search text into tokens
+        val tokens = searchText.split("\\s+".toRegex()).filter { it.isNotBlank() }
+
+        // Combine name and description for searching
+        val combinedText = "${skill.name.lowercase()} ${skill.description.lowercase()}"
+
+        // All tokens must be present in the combined text
+        return tokens.all { token -> combinedText.contains(token) }
     }
 }
