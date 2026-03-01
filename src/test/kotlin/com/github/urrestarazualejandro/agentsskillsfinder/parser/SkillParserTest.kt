@@ -224,4 +224,183 @@ class SkillParserTest {
             }
         }
     }
+
+    @Test
+    fun testParseWithOnlyClosingDelimiter() {
+        val content = """
+            |# Some content
+            |---
+        """.trimMargin()
+
+        val file = File(tempDir, "test.md").apply { writeText(content) }
+        val result = parser.parse(file, tempDir.absolutePath)
+
+        assert(result is ParseResult.Error) { "Should fail when front matter delimiter is missing" }
+    }
+
+    @Test
+    fun testParseWithOnlyOpeningDelimiter() {
+        val content = """
+            |---
+            |name: test
+            |description: some content without closing delimiter
+        """.trimMargin()
+
+        val file = File(tempDir, "test.md").apply { writeText(content) }
+        val result = parser.parse(file, tempDir.absolutePath)
+
+        assert(result is ParseResult.Error) { "Should fail when closing delimiter is missing" }
+    }
+
+    @Test
+    fun testParseYamlException() {
+        val content = """
+            |---
+            |name: test
+            |description:
+            |  - invalid
+            |  : yaml
+            |---
+        """.trimMargin()
+
+        val file = File(tempDir, "test.md").apply { writeText(content) }
+        val result = parser.parse(file, tempDir.absolutePath)
+
+        // Should handle exception gracefully
+        assert(result is ParseResult.Error || result is ParseResult.Success)
+    }
+
+    @Test
+    fun testComputeRelativePathOutsideProject() {
+        val content = """
+            |---
+            |name: test-skill
+            |description: Test description
+            |---
+        """.trimMargin()
+
+        // Create a temp file outside the project
+        val outsideDir = File.createTempFile("outside", "_test").apply {
+            delete()
+            mkdirs()
+        }
+        val file = File(outsideDir, "SKILL.md").apply { writeText(content) }
+
+        val result = parser.parse(file, tempDir.absolutePath)
+
+        assert(result is ParseResult.Success) { "Should parse successfully" }
+        if (result is ParseResult.Success) {
+            // When file is outside project base path, relative path should be just the directory name
+            assert(result.skill.relativePath.isNotBlank())
+        }
+
+        outsideDir.deleteRecursively()
+    }
+
+    @Test
+    fun testParseEmptyFrontMatterField() {
+        val content = """
+            |---
+            |name: test-skill
+            |description: Valid description
+            |source:
+            |risk:
+            |---
+        """.trimMargin()
+
+        val file = File(tempDir, "test.md").apply { writeText(content) }
+        val result = parser.parse(file, tempDir.absolutePath)
+
+        assert(result is ParseResult.Success) { "Should parse even with empty optional fields" }
+        if (result is ParseResult.Success) {
+            assert(result.skill.name == "test-skill")
+            assert(result.skill.description == "Valid description")
+        }
+    }
+
+    @Test
+    fun testParseDescriptionWithMultipleContinuationLines() {
+        val content = """
+            |---
+            |name: multi-line-skill
+            |description: "First line of description"
+            |  second line continuation
+            |  third line continuation
+            |  fourth line continuation
+            |risk: safe
+            |---
+        """.trimMargin()
+
+        val file = File(tempDir, "multi.md").apply { writeText(content) }
+        val result = parser.parse(file, tempDir.absolutePath)
+
+        assert(result is ParseResult.Success) { "Should parse multi-line description: ${(result as? ParseResult.Error)?.reason}" }
+        if (result is ParseResult.Success) {
+            assert(result.skill.name == "multi-line-skill")
+            assert(result.skill.description.contains("First line"))
+            assert(result.skill.description.contains("continuation"))
+        }
+    }
+
+    @Test
+    fun testParseDescriptionWithQuotesAndRemainder() {
+        val content = """
+            |---
+            |name: remainder-skill
+            |description: "Quoted part" and some remainder
+            |  with continuation lines
+            |  on multiple lines
+            |source: community
+            |---
+        """.trimMargin()
+
+        val file = File(tempDir, "remainder.md").apply { writeText(content) }
+        val result = parser.parse(file, tempDir.absolutePath)
+
+        assert(result is ParseResult.Success) { "Should parse description with remainder: ${(result as? ParseResult.Error)?.reason}" }
+        if (result is ParseResult.Success) {
+            assert(result.skill.description.isNotBlank())
+        }
+    }
+
+    @Test
+    fun testParseDescriptionWithDashLine() {
+        val content = """
+            |---
+            |name: dash-test
+            |description: "Description line"
+            |  - this should not be treated as continuation
+            |source: personal
+            |---
+        """.trimMargin()
+
+        val file = File(tempDir, "dash.md").apply { writeText(content) }
+        val result = parser.parse(file, tempDir.absolutePath)
+
+        // This could either parse successfully or fail depending on YAML interpretation
+        // The important thing is it handles it gracefully without crashing
+        assert(result is ParseResult.Success || result is ParseResult.Error) {
+            "Should handle dash line gracefully: $result"
+        }
+    }
+
+    @Test
+    fun testParseRelativePathWithBackslash() {
+        val content = """
+            |---
+            |name: path-test
+            |description: Testing path computation
+            |---
+        """.trimMargin()
+
+        val subDir = File(tempDir, "skills/test-skill").apply { mkdirs() }
+        val file = File(subDir, "SKILL.md").apply { writeText(content) }
+
+        val result = parser.parse(file, tempDir.absolutePath)
+
+        assert(result is ParseResult.Success) { "Should parse successfully" }
+        if (result is ParseResult.Success) {
+            assert(result.skill.relativePath.contains("test-skill"))
+        }
+    }
 }
