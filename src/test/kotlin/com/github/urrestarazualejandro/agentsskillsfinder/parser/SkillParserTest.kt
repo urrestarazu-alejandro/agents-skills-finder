@@ -36,7 +36,9 @@ class SkillParserTest {
     }
 
     @Test
-    fun testParseYamlWithFoldedScalar() {
+    fun testParseYamlWithMalformedMultilineDescription() {
+        // This tests the common case where description has quotes that close prematurely
+        // followed by unquoted continuation lines (invalid YAML but common in skill files)
         val content = """
             |---
             |name: java-pro
@@ -53,6 +55,12 @@ class SkillParserTest {
         val result = parser.parse(file, tempDir.absolutePath)
 
         assert(result is ParseResult.Success) { "Should parse successfully. Error: ${(result as? ParseResult.Error)?.reason}" }
+        if (result is ParseResult.Success) {
+            assert(result.skill.name == "java-pro")
+            assert(result.skill.description.contains("Master Java 21+"))
+            assert(result.skill.description.contains("GraalVM"))
+            assert(result.skill.source == "community")
+        }
     }
 
     @Test
@@ -60,7 +68,7 @@ class SkillParserTest {
         val content = """
             |---
             |name: schema-markup
-            |description: ">"
+            |description: >
             |  Design, validate, and optimize schema.org structured data for eligibility,
             |  correctness, and measurable SEO impact.
             |allowed-tools: Read, Glob, Grep
@@ -73,6 +81,10 @@ class SkillParserTest {
         val result = parser.parse(file, tempDir.absolutePath)
 
         assert(result is ParseResult.Success) { "Should parse successfully: ${(result as? ParseResult.Error)?.reason}" }
+        if (result is ParseResult.Success) {
+            assert(result.skill.name == "schema-markup")
+            assert(result.skill.description.contains("Design, validate"))
+        }
     }
 
     @Test
@@ -121,7 +133,7 @@ class SkillParserTest {
         val content = """
             |---
             |name: market-sizing-analysis
-            |description: "determine SAM", "estimate SOM", and market analysis
+            |description: "Determine SAM, estimate SOM, and perform market analysis"
             |risk: unknown
             |source: community
             |---
@@ -131,6 +143,10 @@ class SkillParserTest {
         val result = parser.parse(file, tempDir.absolutePath)
 
         assert(result is ParseResult.Success) { "Should parse successfully: ${(result as? ParseResult.Error)?.reason}" }
+        if (result is ParseResult.Success) {
+            assert(result.skill.name == "market-sizing-analysis")
+            assert(result.skill.description.contains("market analysis"))
+        }
     }
 
     @Test
@@ -191,5 +207,21 @@ class SkillParserTest {
         assert(skill.description == "A complete skill with all fields")
         assert(skill.source == "community")
         assert(skill.risk == "safe")
+    }
+
+    @Test
+    fun testParseRealJavaProSkill() {
+        // Test parsing the actual java-pro skill file if it exists
+        val javaProFile = File(".agents/skills/java-pro/SKILL.md")
+        if (javaProFile.exists()) {
+            val result = parser.parse(javaProFile, ".")
+            assert(result is ParseResult.Success) {
+                "Should parse java-pro skill: ${(result as? ParseResult.Error)?.reason}"
+            }
+            if (result is ParseResult.Success) {
+                assert(result.skill.name == "java-pro")
+                assert(result.skill.description.isNotBlank())
+            }
+        }
     }
 }

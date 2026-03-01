@@ -19,7 +19,10 @@ class SkillParser {
                 return ParseResult.Error(file.absolutePath, "No front matter found")
             }
 
-            val data = yaml.load<Map<String, Any>>(frontMatter)
+            // Normalize frontmatter to handle common YAML formatting issues
+            val normalizedFrontMatter = normalizeFrontMatter(frontMatter)
+
+            val data = yaml.load<Map<String, Any>>(normalizedFrontMatter)
 
             val name = data["name"] as? String
             val description = data["description"] as? String
@@ -48,6 +51,58 @@ class SkillParser {
         } catch (e: Exception) {
             ParseResult.Error(file.absolutePath, "Parse error: ${e.message}")
         }
+    }
+
+    private fun normalizeFrontMatter(frontMatter: String): String {
+        val lines = frontMatter.lines().toMutableList()
+        val result = mutableListOf<String>()
+        var i = 0
+
+        while (i < lines.size) {
+            val line = lines[i]
+
+            // Check if this is a description field with quoted string followed by unquoted continuation
+            if (line.trim().startsWith("description:") && line.contains("\"")) {
+                val descriptionMatch = Regex("""^(\s*description:\s*)"([^"]*)"(.*)$""").find(line)
+
+                if (descriptionMatch != null) {
+                    val indent = descriptionMatch.groupValues[1]
+                    val firstPart = descriptionMatch.groupValues[2]
+                    val remainder = descriptionMatch.groupValues[3].trim()
+
+                    // Look ahead for continuation lines (indented lines without key:)
+                    val continuationLines = mutableListOf<String>()
+                    var j = i + 1
+
+                    while (j < lines.size) {
+                        val nextLine = lines[j]
+                        // Check if it's an indented continuation (starts with spaces, no key:)
+                        if (nextLine.matches(Regex("""^\s+[^\s\-:].*""")) && !nextLine.trim().startsWith("-")) {
+                            continuationLines.add(nextLine.trim())
+                            j++
+                        } else {
+                            break
+                        }
+                    }
+
+                    // If we found continuation lines, convert to folded scalar format
+                    if (continuationLines.isNotEmpty()) {
+                        result.add("${indent}>")
+                        result.add("  $firstPart${if (remainder.isNotEmpty()) " $remainder" else ""}")
+                        continuationLines.forEach { cont ->
+                            result.add("  $cont")
+                        }
+                        i = j
+                        continue
+                    }
+                }
+            }
+
+            result.add(line)
+            i++
+        }
+
+        return result.joinToString("\n")
     }
 
     private fun extractFrontMatter(content: String): String? {
