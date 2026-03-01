@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <!-- Background with 2px padding -->
+  <!-- Search magnifier representing "finder" -->
+  <circle cx="16" cy="16" r="8" fill="none" stroke="#AFB1B3" stroke-width="2.5"/>
+  <line x1="22" y1="22" x2="28" y2="28" stroke="#AFB1B3" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Puzzle piece representing "skills" -->
+  <path d="M29 8 L35 8 C36.1 8 37 8.9 37 10 L37 13 C35.3 13 34 14.3 34 16 C34 17.7 35.3 19 37 19 L37 22 C37 23.1 36.1 24 35 24 L29 24 Z" fill="#AFB1B3"/>
+
+  <!-- Agent/bot icon -->
+  <rect x="4" y="25" width="12" height="11" rx="2" fill="none" stroke="#AFB1B3" stroke-width="2"/>
+  <circle cx="8" cy="30" r="1.5" fill="#AFB1B3"/>
+  <circle cx="12" cy="30" r="1.5" fill="#AFB1B3"/>
+  <line x1="7" y1="33" x2="13" y2="33" stroke="#AFB1B3" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
