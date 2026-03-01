@@ -107,6 +107,12 @@ intellijPlatform {
         ides {
             recommended()
         }
+        // Verify plugin compatibility with specified IDE versions
+        // Read more: https://plugins.jetbrains.com/docs/intellij/verifying-plugin-compatibility.html
+        freeArgs = listOf(
+            "-mute",
+            "ForbiddenPluginIdPrefix" // Mute warning about plugin ID prefix
+        )
     }
 }
 

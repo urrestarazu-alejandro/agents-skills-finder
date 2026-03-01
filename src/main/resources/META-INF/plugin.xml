@@ -1,25 +1,46 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>com.github.urrestarazualejandro.agentsskillsfinder</id>
-    <name>agents-skills-finder</name>
-    <vendor>urrestarazu-alejandro</vendor>
 
+    <!-- Public plugin name should be written in Title Case. -->
+    <name>Agent Skills Finder</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="urrestarazu.alejandro@gmail.com" url="https://github.com/urrestarazu-alejandro/agents-skills-finder">
+        urrestarazu-alejandro
+    </vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/intellij/plugin-user-experience.html#plugin-description-and-presentation -->
+    <description><![CDATA[
+    Agents Skills Finder is an IntelliJ plugin that discovers and indexes skills from the <code>.agents/skills</code> directory in your project.
+    Search skills by name or description and copy their paths directly to your clipboard for reference in AI agent configurations.
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <!-- The idea-version element with since-build and until-build is automatically added by Gradle during build.
+         Not specifying until-build allows forward compatibility with future IDE versions.
+         Compatible with IntelliJ Platform 2024.2+ (branch 242 and later). -->
     <depends>com.intellij.modules.platform</depends>
 
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow
-            factoryClass="com.github.urrestarazualejandro.agentsskillsfinder.toolWindow.MyToolWindowFactory"
-            id="Agent Skills"
-            anchor="right"/>
-        <projectService
-            serviceImplementation="com.github.urrestarazualejandro.agentsskillsfinder.services.SkillsService"/>
+                factoryClass="com.github.urrestarazualejandro.agentsskillsfinder.toolWindow.MyToolWindowFactory"
+                id="Agent Skills"
+                anchor="right"
+                icon="AllIcons.Toolwindows.ToolWindowFind"/>
     </extensions>
 
     <projectListeners>
         <listener
-            class="com.github.urrestarazualejandro.agentsskillsfinder.listeners.ProjectOpenListener"
-            topic="com.intellij.openapi.project.ProjectManagerListener"/>
+                class="com.github.urrestarazualejandro.agentsskillsfinder.listeners.ProjectOpenListener"
+                topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </projectListeners>
 </idea-plugin>
