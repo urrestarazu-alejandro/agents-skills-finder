@@ -18,11 +18,11 @@
 - [ ] Configure the [CODECOV_TOKEN](https://docs.codecov.com/docs/quick-start) secret for automated test coverage reports on PRs
 
 <!-- Plugin description -->
-Agents Skills Finder is an IntelliJ plugin that discovers and indexes skills from the `.agents/skills` directory in your project. Search skills by name or description and copy their paths directly to your clipboard for reference in AI agent configurations.
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
+Agents Skills Finder is an IntelliJ plugin that discovers and indexes skills from the `.agents/skills` directory in your project.
 
-To keep everything working, do not remove `<!-- ... -->` sections. 
+Search skills by name or description and copy their paths directly to your clipboard for reference in AI agent configurations.
+
 <!-- Plugin description end -->
 
 ## Installation
